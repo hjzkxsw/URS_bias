@@ -113,10 +113,7 @@ python test.py --problem_set all_evaluated_list --test_scale_list 100 --test_epi
 Evaluate multiple scales. The number of values in `--test_episodes` must match `--test_scale_list`.
 
 ```bash
-python test.py \
-  --problem_set tsp,cvrp \
-  --test_scale_list 100 1000 2000 \
-  --test_episodes 1000 16 16
+python test.py --problem_set tsp,cvrp --test_scale_list 100 1000 2000 --test_episodes 1000 16 16
 ```
 
 #### Specialist Checkpoints
