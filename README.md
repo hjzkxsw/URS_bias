@@ -2,7 +2,7 @@
 
 This repository contains the official implementation of [**URS: A Unified Neural Routing Solver for Cross-Problem Zero-Shot Generalization**](https://arxiv.org/abs/2509.23413). URS is a reinforcement-learning-based constructive neural solver designed to solve many vehicle routing problems (VRP) variants with a single model. URS uses a **Unified Data Representation (UDR)**, a **Mixed Bias Module (MBM)**, adaptive parameter generation, and stepwise feasibility masks to handle diverse constraints and generalize to a wide range of unseen VRP variants without any fine-tuning.
 
-![URS](URS.png)
+![URS](utils/URS.png)
 
 ## What You Can Do
 
