@@ -1,17 +1,19 @@
-## [ICML 2026] URS: A Unified Neural Routing Solver for Cross-Problem Zero-Shot Generalization
+## 🚀 [ICML 2026] URS: A Unified Neural Routing Solver for Cross-Problem Zero-Shot Generalization
 
 This repository contains the official implementation of [**URS: A Unified Neural Routing Solver for Cross-Problem Zero-Shot Generalization**](https://arxiv.org/abs/2509.23413). URS is a reinforcement-learning-based constructive neural solver designed to solve many vehicle routing problems (VRP) variants with a single model. URS uses a **Unified Data Representation (UDR)**, a **Mixed Bias Module (MBM)**, adaptive parameter generation, and stepwise feasibility masks to handle diverse constraints and generalize to a wide range of unseen VRP variants without any fine-tuning.
 
 ![URS](utils/URS.png)
 
-## What You Can Do
+## ✨ What You Can Do
 
-- `One-click evaluation of multiple VRP variants` (up to 110) via the provided generalist checkpoint.
-- Evaluate specialist checkpoints trained for the 11 training problems.
-- Evaluate on TSPLIB and CVRPLIB benchmark instances.
-- Train your unified model from scratch using the default 11 training problems or additional problems.
+- 🤗 `One-click evaluation of multiple VRP variants` (up to 110) via the provided generalist checkpoint.
+- 🤗 Evaluate specialist checkpoints trained for the 11 training problems.
+- 🤗 Evaluate on TSPLIB and CVRPLIB benchmark instances.
+- 🤗 With our unified framework, you can seamlessly train from scratch:
+  - A **generalist model** capable of handling 110 diverse tasks.
+  - A **specialist model** tailored to any single task of your choice.
 
-## Naming Guide
+## 🏷️ Naming Guide
 
 The current codebase supports generating high-quality solutions for **110** diverse VRP variants. See `problem.ProblemDef.py` for a detailed definition of each problem. Problem names are compositional. Common tokens include:
 
@@ -28,7 +30,7 @@ The current codebase supports generating high-quality solutions for **110** dive
 | `pd` | Pickup and delivery |
 | `pc` | Prize-collecting or penalty-based routing, such as PCTSP/SPCTSP |
 
-## Repository Layout
+## 🗂️ Repository Layout
 
 ```text
 .
@@ -48,7 +50,7 @@ The current codebase supports generating high-quality solutions for **110** dive
 
 ```
 
-## Requirements
+## 🛠️ Requirements
 
 The code is pure Python and PyTorch. A CUDA-enabled GPU is recommended for training and evaluation. We don't use any hard-to-install packages. If any package is missing, just install it following the prompts.
 
@@ -59,17 +61,17 @@ numpy
 openpyxl
 ```
 
-## Data and Checkpoints
+## 💾 Data and Checkpoints
 
 **Pretrained models:** download one unified checkpoint and eleven specialist checkpoints from [Google Drive](https://drive.google.com/drive/folders/11d_Ot9hMOeDRAENP9XtgH_H3n1UhvYHO?usp=sharing) and place them in `./pretrained/`
 
 **Datasets:** download the test sets for the evaluated problems and benchmark datasets from [Google Drive](https://drive.google.com/drive/folders/1Ptj4a78kZUITdvp7DW3tPw5D0o9wHne5?usp=sharing) and place datasets in `./dataset/`
 
 
-## Evaluation
+## 📊 Evaluation
 You can pass `--problem_set` in three ways:
 
-1. A predefined problem list, which can be found in `problem.ProblemSet.py`
+1. A predefined problem list, which can be found in `problem.ProblemSet.py.`
 2. A comma-separated list of specific problem names.
 3. A benchmark alias: `tsplib` or `cvrplib`.
 
@@ -84,7 +86,7 @@ dataset/
 
 For TSPLIB and CVRPLIB, the benchmark tester recursively searches the directory passed through `--data_dir` for `.tsp` or `.vrp` files.
 
-## Quick Start
+## ⚡ Quick Start
 
 All commands below assume you are in the repository root:
 
@@ -141,7 +143,7 @@ python test.py --problem_set cvrplib --scale_range_lib 3000 7001
 ```
 
 
-## Training
+## ⚙️ Training
 
 Training data is generated on the fly for supported training problems. Validation data is loaded from `./dataset`, so validation files must be prepared before training.
 
@@ -155,7 +157,7 @@ Train with additional problems:
 python train.py --add_training_problems acvrpbtw --validation_problem_set train_problem_list
 ```
 
-## Notes and Troubleshooting
+## 💡 Notes and Troubleshooting
 
 - If `--test_episodes` and `--test_scale_list` have different lengths, `test.py` raises a `ValueError`.
 - If a problem directory or dataset file is missing under `--data_dir`, the evaluation for that problem/scale cannot run.
@@ -163,7 +165,7 @@ python train.py --add_training_problems acvrpbtw --validation_problem_set train_
 - Large-scale and asymmetric evaluations can require substantial GPU memory. Reduce batch sizes with `--test_batch_size_large` or disable augmentation with `--disable_aug` if needed.
 - Benchmark evaluation supports only one benchmark family at a time: `--problem_set tsplib` or `--problem_set cvrplib`.
 
-## Citation
+## 😍 Citation
 
 If this repository is helpful for your research, please cite our paper:
 
@@ -177,7 +179,7 @@ If this repository is helpful for your research, please cite our paper:
 }
 ```
 
-## Acknowledgements
+## 🙏 Acknowledgements
 
 Some URS implementations build on ideas and code from the following open-source projects. We sincerely appreciate their contributions to neural combinatorial optimization.
 
@@ -189,7 +191,7 @@ Some URS implementations build on ideas and code from the following open-source 
 - MVMoE: [https://github.com/RoyalSkye/Routing-MVMoE](https://github.com/RoyalSkye/Routing-MVMoE)
 - RouteFinder: [https://github.com/ai4co/routefinder](https://github.com/ai4co/routefinder)
 
-## Contact
+## 📧 Contact
 We have verified the legality of the corresponding solutions for each problem. We will continue to strive to improve its clarity and welcome any minor errors in the code implementation.
 
 If there are any issues in running or re-implementing the code, please contact the author Changliang Zhou via email (zhoucl2022@mail.sustech.edu.cn) in a timely manner. 
