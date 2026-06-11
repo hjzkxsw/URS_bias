@@ -134,12 +134,13 @@ class ProblemSet:
 
     '''
     11 training tasks are selected by adhering to the principle of minimal redundancy and strictly align with existing work on CVRP variant selection (e.g., MVMoE and ReLD): 
-    most features in UDR appear in at least two training problems, helping prevent URS from overfitting to a single problem. 
+    Most features in UDR appear in at least two training problems, helping prevent URS from overfitting to a single problem. 
     The only exception is the Penalty attribute, as there is structural similarity between the seen PCTSP and unseen SPCTSP.
     '''
-    train_problem_list: ClassVar[List[str]] = sort_by_name_length([
-        "atsp", "tsp", "op", "pctsp", "pdtsp", "acvrp", "cvrp", "cvrptw", "cvrpb", "ocvrp", "ocvrptw"
-        ])
+    # train_problem_list: ClassVar[List[str]] = sort_by_name_length([
+    #     "atsp", "tsp", "op", "pctsp", "pdtsp", "acvrp", "cvrp", "cvrptw", "cvrpb", "ocvrp", "ocvrptw"
+    #     ])
+    train_problem_list: ClassVar[List[str]] = ['atsp', 'acvrp', 'tsp', 'op', 'pctsp', 'cvrp', 'cvrpb', 'cvrptw', 'ocvrp', 'ocvrptw', 'pdtsp']
 
     # all evaluated problems, totaling 110 problems.
     all_evaluated_list: ClassVar[List[str]] = sort_by_name_length(
