@@ -1,3 +1,7 @@
 .vscode
 *.pyc
 __pycache__/**
+result_*
+*.log
+*.txt
+*.pt
