@@ -22,7 +22,7 @@ def add_common_arguments(parser):
     parser.add_argument("--cuda", type=int, default=0, help="CUDA device number to use")
     parser.add_argument("--seed", type=int, default=3407, help="Random seed for reproducibility")
     # simply set data_dir to './data' and the project will recursively search for all sub-folders under './data'.
-    parser.add_argument("--data_dir", type=str, default="./dataset", 
+    parser.add_argument("--data_dir", type=str, default="./public/home/houjz/URS_pe/dataset", 
                         help="Directory where the data is stored, used for both validation and testing.")
     # generalist model: unified_checkpoint_500.pt
     # specialist models: {problem_name}_checkpoint_300.pt, e.g., tsp_checkpoint_300.pt
@@ -31,7 +31,7 @@ def add_common_arguments(parser):
 
 def add_inference_arguments(parser):
     """inference/test dataset parameters"""
-    parser.add_argument("--problem_set", type=str, default="all_evaluated_list",
+    parser.add_argument("--problem_set", type=str, default="train_problem_list",
                         help="Problem set for testing. Supports inputs include: " + 
                         "(1) prepared ProblemSet names like 'vrpmix_list', 'zero_shot_list', 'all_evaluated_list', " +
                         "(2) comma-separated specific problems like 'tsp,cvrp,pdcvrp', "+

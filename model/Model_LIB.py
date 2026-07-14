@@ -294,12 +294,16 @@ class Adaptation_Bias_Module(nn.Module):
         super().__init__()
         embedding_dim = model_params['embedding_dim']
         self.W1 = nn.Linear(13, embedding_dim)
-        self.W2 = nn.Linear(embedding_dim, 1)
+        self.W2 = nn.Linear(embedding_dim, 512)
+        self.W3 = nn.Linear(512, embedding_dim)
+        self.W4 = nn.Linear(embedding_dim, 1)
 
     def forward(self, problem_representation):
-        # input.shape: (8,)
+        # input.shape: (13,)
         # bias >= 1, because we find it is helpful for obtaining better coverage behavior in our experiments.
-        return F.relu(self.W2(self.W1(problem_representation))) + 1 
+        hidden = self.W2(self.W1(problem_representation))
+        hidden = F.relu(self.W3(hidden))
+        return F.relu(self.W4(hidden))
 
 
 
