@@ -358,6 +358,11 @@ def copy_all_src(dst_root):
         if hasattr(value, '__file__') and value.__file__:
             src_abspath = os.path.abspath(value.__file__)
 
+            # Dynamic module namespaces may expose synthetic paths such as "_ops.py".
+            if not os.path.isfile(src_abspath):
+                continue
+
+
             if os.path.commonprefix([home_dir, src_abspath]) == home_dir:
                 dst_filepath = os.path.join(dst_path, os.path.basename(src_abspath))
 
