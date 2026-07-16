@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 def add_common_arguments(parser):
     """common parameters"""
-    parser.add_argument("--cuda", type=int, default=0, help="CUDA device number to use")
+    parser.add_argument("--cuda", type=int, default=1, help="CUDA device number to use")
     parser.add_argument("--seed", type=int, default=3407, help="Random seed for reproducibility")
     # simply set data_dir to './data' and the project will recursively search for all sub-folders under './data'.
     parser.add_argument("--data_dir", type=str, default="/public/home/houjz/URS_pe/dataset", 
@@ -60,6 +60,8 @@ def add_training_arguments(parser):
     parser.add_argument("--batches_per_epoch", type=int, default=2000, help="Steps per epoch")
     parser.add_argument("--batch_size", type=int, default=128, help="Batch size for training in stage 1")
     parser.add_argument("--model_save_interval", type=int, default=1, help="Interval (in epochs) for saving the model during training")
+    parser.add_argument("--po_alpha", type=float, default=0.03,
+                        help="Temperature coefficient for the Bradley-Terry preference optimization loss")
     parser.add_argument("--add_training_problems", type=str, nargs='+', default=None,
                         help="Additional training problems to include, if None, only the predefined training problems are used.")
 

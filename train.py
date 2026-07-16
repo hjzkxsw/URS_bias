@@ -83,6 +83,7 @@ if __name__ == "__main__":
         'validation_scale': args.validation_scale,
         'validation_episodes': args.validation_episodes,
         'validation_batch_size': args.validation_batch_size,
+        'po_alpha': args.po_alpha,
         'train_problem_list': args.train_problem_list,
         'validation_problem_list': args.validation_problem_list,
         'logging': {
@@ -109,7 +110,7 @@ if __name__ == "__main__":
     demand_max_str = 'demand_max1' if model_params['demand_max1'] else 'no_demand_max1'
     train_tasks_len = len(args.train_problem_list)
     validation_tasks_len = len(args.validation_problem_list)
-    file_str = f"{demand_max_str}_T{train_tasks_len}V{validation_tasks_len}_epoch{args.training_epochs}_bs{args.batch_size}_batch{args.batches_per_epoch}"
+    file_str = f"PO{args.po_alpha}_{demand_max_str}_T{train_tasks_len}V{validation_tasks_len}_epoch{args.training_epochs}_bs{args.batch_size}_batch{args.batches_per_epoch}"
 
     logger_params = {
         'log_file': {

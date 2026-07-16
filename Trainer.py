@@ -20,6 +20,7 @@ import random
 
 import numpy as np
 import torch
+import torch.nn.functional as F
 from logging import getLogger
 from env.UniVRPEnv import UniVRPEnv
 
@@ -36,6 +37,29 @@ from utils.utils import *
 from env.mask.mask_registry import mask_registry
 
 
+def preference_optimization_loss(reward, trajectory_log_prob, alpha):
+    """Bradley-Terry preference loss over POMO routes from each instance."""
+    if reward.ndim != 2 or trajectory_log_prob.ndim != 2:
+        raise ValueError("reward and trajectory_log_prob must both have shape (batch, pomo)")
+    if reward.shape != trajectory_log_prob.shape:
+        raise ValueError(
+            "reward and trajectory_log_prob must have the same shape, got "
+            f"{reward.shape} and {trajectory_log_prob.shape}"
+        )
+    if alpha <= 0:
+        raise ValueError(f"PO alpha must be positive, got {alpha}")
+
+    centered_reward = reward - reward.mean(dim=1, keepdim=True)
+    preference_labels = (
+        centered_reward.unsqueeze(2) > centered_reward.unsqueeze(1)
+    ).to(dtype=trajectory_log_prob.dtype)
+    pairwise_logits = alpha * (
+        trajectory_log_prob.unsqueeze(2) - trajectory_log_prob.unsqueeze(1)
+    )
+
+    return -(preference_labels * F.logsigmoid(pairwise_logits)).mean()
+
+
 class Trainer:
     def __init__(self,
                  env_params,
@@ -48,6 +72,7 @@ class Trainer:
         self.model_params = model_params
         self.optimizer_params = optimizer_params
         self.trainer_params = trainer_params
+        self.po_alpha = trainer_params['po_alpha']
         
         # result folder, logger
         self.logger = getLogger(name='trainer')
@@ -65,6 +90,7 @@ class Trainer:
 
         self.logger.info("{} problems for training: {}".format(len(self.train_problem_list), self.train_problem_list))
         self.logger.info("{} problems for validation: {}".format(len(self.validation_problem_list), self.validation_problem_list))
+        self.logger.info("Training objective: preference optimization (alpha={})".format(self.po_alpha))
 
         self.problem_representation_set = get_problem_representations()
         unknown_problems = [p for p in self.validation_problem_list if p not in self.problem_representation_set]
@@ -304,14 +330,14 @@ class Trainer:
 
         # Loss
         ###############################################
-        advantage = reward - reward.float().mean(dim=1, keepdims=True)
-        # shape: (batch, pomo)
         log_prob = prob_list.log().sum(dim=2)
         # size = (batch, pomo)
 
-        loss = -advantage * log_prob  # Minus Sign: To Increase REWARD
-        # shape: (batch, pomo)
-        loss_mean = loss.mean()
+        loss_mean = preference_optimization_loss(
+            reward=reward,
+            trajectory_log_prob=log_prob,
+            alpha=self.po_alpha,
+        )
 
         # Score
         ###############################################
