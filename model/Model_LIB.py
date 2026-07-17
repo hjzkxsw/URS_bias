@@ -150,16 +150,21 @@ def adaptation_attention_free_module(q, k, v, adaptation_bias, ninf_mask=None):
     # shape: (batch, n, embedding_dim)
     a_k = exp_A @ exp_k
 
-    if torch.isinf(bias).any() or torch.isnan(bias).any():
-        torch.nan_to_num_(bias)
-    if torch.isinf(a_k).any() or torch.isnan(a_k).any():
-        torch.nan_to_num_(a_k)
+    # if torch.isinf(bias).any() or torch.isnan(bias).any():
+    #     torch.nan_to_num_(bias)
+    # if torch.isinf(a_k).any() or torch.isnan(a_k).any():
+    #     torch.nan_to_num_(a_k)
+
+    torch.nan_to_num_(bias)
+    torch.nan_to_num_(a_k)
 
     weighted = bias / (a_k + 1e-8)
     # shape: (batch, n, embedding_dim)
 
-    if torch.isnan(weighted).any() or torch.isnan(weighted).any():
-        torch.nan_to_num_(weighted)
+    # if torch.isnan(weighted).any() or torch.isnan(weighted).any():
+    #     torch.nan_to_num_(weighted)
+        
+    torch.nan_to_num_(weighted)
     # shape: (batch, n, embedding_dim)
 
     out = torch.mul(sigmoid_q, weighted)
@@ -299,7 +304,7 @@ class Adaptation_Bias_Module(nn.Module):
     def forward(self, problem_representation):
         # input.shape: (8,)
         # bias >= 1, because we find it is helpful for obtaining better coverage behavior in our experiments.
-        return F.relu(self.W2(self.W1(problem_representation))) + 1 
+        return F.relu(self.W2(self.W1(problem_representation)))
 
 
 
