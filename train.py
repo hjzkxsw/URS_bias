@@ -97,9 +97,9 @@ if __name__ == "__main__":
             },
         },
         'model_load': {
-            'enable': False,  # enable loading pre-trained model
-            #'path': '',  # directory path of pre-trained model and log files saved.
-            #'epoch': ,  # epoch version of pre-trained model to load.
+            'enable': True,  # enable loading pre-trained model
+            'path': '/public/home/houjz/urs_bias/URS_bias/result_train/2026-07-15/20260715_013654_demand_max1_T11V30_epoch500_bs128_batch2000',  # directory path of pre-trained model and log files saved.
+            'epoch': 221,  # epoch version of pre-trained model to load.
         },
     }
 
