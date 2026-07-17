@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 def add_common_arguments(parser):
     """common parameters"""
-    parser.add_argument("--cuda", type=int, default=1, help="CUDA device number to use")
+    parser.add_argument("--cuda", type=int, default=0, help="CUDA device number to use")
     parser.add_argument("--seed", type=int, default=3407, help="Random seed for reproducibility")
     # simply set data_dir to './data' and the project will recursively search for all sub-folders under './data'.
     parser.add_argument("--data_dir", type=str, default="/public/home/houjz/URS_pe/dataset", 
@@ -36,8 +36,8 @@ def add_inference_arguments(parser):
                         "(1) prepared ProblemSet names like 'vrpmix_list', 'zero_shot_list', 'all_evaluated_list', " +
                         "(2) comma-separated specific problems like 'tsp,cvrp,pdcvrp', "+
                         "(3) benchmark aliases 'tsplib' or 'cvrplib'.")
-    parser.add_argument("--test_scale_list", type=int, nargs='+', default=[1000,5000], help="Problem scales for testing.") 
-    parser.add_argument("--test_episodes", type=int, nargs='+', default=[16,16], 
+    parser.add_argument("--test_scale_list", type=int, nargs='+', default=[1000], help="Problem scales for testing.") 
+    parser.add_argument("--test_episodes", type=int, nargs='+', default=[16], 
                         help="Number of test episodes for each scale. Must match --test_scale_list length.")
     parser.add_argument("--scale_range_lib", type=int, nargs=2, default=[3000, 7001], help="Scale range [min, max) for benchmark evaluation.")
     parser.add_argument("--test_batch_size_small", type=int, nargs=4, default=[1000, 125, 50, 8], 
