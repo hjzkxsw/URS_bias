@@ -304,7 +304,9 @@ class Adaptation_Bias_Module(nn.Module):
     def forward(self, problem_representation):
         # input.shape: (8,)
         # bias >= 1, because we find it is helpful for obtaining better coverage behavior in our experiments.
-        return F.relu(self.W2(self.W1(problem_representation)))
+        raw_alpha = self.W2(F.silu(self.W1(problem_representation)))
+        alpha = F.softplus(raw_alpha)
+        return alpha
 
 
 
