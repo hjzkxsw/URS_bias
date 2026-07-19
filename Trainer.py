@@ -123,7 +123,7 @@ class Trainer:
         self.start_epoch = 1
         model_load = trainer_params['model_load']
         if model_load['enable']:
-            checkpoint_fullname = '{path}/checkpoint-{epoch}.pt'.format(**model_load)
+            checkpoint_fullname = '{path}/checkpoint_{epoch}.pt'.format(**model_load)
             checkpoint = torch.load(checkpoint_fullname, map_location=device)
             self.model.load_state_dict(checkpoint['model_state_dict'])
             self.start_epoch = 1 + model_load['epoch']
