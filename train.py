@@ -103,9 +103,7 @@ if __name__ == "__main__":
             },
         },
         'model_load': {
-            'enable': True,  # enable loading pre-trained model
-            'path': '/public/home/houjz/urs_bias/URS_bias/result_train/2026-07-16/20260716_211558_PO0.03_demand_max1_T11V30_epoch500_bs128_batch2000',  # directory path of pre-trained model and log files saved.
-            'epoch': 225,  # epoch version of pre-trained model to load.
+            'enable': False,
         },
     }
 
@@ -115,7 +113,7 @@ if __name__ == "__main__":
     demand_max_str = 'demand_max1' if model_params['demand_max1'] else 'no_demand_max1'
     train_tasks_len = len(args.train_problem_list)
     validation_tasks_len = len(args.validation_problem_list)
-    file_str = f"PO{args.po_alpha}_{demand_max_str}_T{train_tasks_len}V{validation_tasks_len}_epoch{args.training_epochs}_bs{args.batch_size}_batch{args.batches_per_epoch}"
+    file_str = f"{args.optimizer_type}_PO{args.po_alpha}_{demand_max_str}_T{train_tasks_len}V{validation_tasks_len}_epoch{args.training_epochs}_bs{args.batch_size}_batch{args.batches_per_epoch}"
 
     logger_params = {
         'log_file': {

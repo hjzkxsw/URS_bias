@@ -94,8 +94,8 @@ def add_model_arguments(parser):
 
 def add_optimizer_arguments(parser):
     """optimizer parameters"""
-    parser.add_argument("--optimizer_type", type=str, default="AdamW", help="Optimizer type for the model",
-                        choices=['AdamW', 'Adam'])
+    parser.add_argument("--optimizer_type", type=str, default="Muon", help="Optimizer type for the model",
+                        choices=['Muon', 'AdamW', 'Adam'])
     parser.add_argument("--optimizer_lr", type=float, default=1e-4, help="Learning rate for the optimizer")
     parser.add_argument("--weight_decay", type=float, default=1e-6, help="Weight decay for the optimizer")
 

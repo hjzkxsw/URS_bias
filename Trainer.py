@@ -34,6 +34,7 @@ from data.DataReader import get_saved_data
 from torch.optim import AdamW, Adam
 
 from utils.utils import *
+from utils.muon import HybridMuonAdamW
 from env.mask.mask_registry import mask_registry
 
 
@@ -112,7 +113,9 @@ class Trainer:
 
         # Main Components
         self.model = Model(**self.model_params)
-        if self.optimizer_params['optimizer_type'] == 'AdamW':
+        if self.optimizer_params['optimizer_type'] == 'Muon':
+            self.optimizer = self._build_muon_optimizer()
+        elif self.optimizer_params['optimizer_type'] == 'AdamW':
             self.optimizer = AdamW(self.model.parameters(), **self.optimizer_params['optimizer'])
         elif self.optimizer_params['optimizer_type'] == 'Adam':
             self.optimizer = Adam(self.model.parameters(), **self.optimizer_params['optimizer'])
@@ -174,6 +177,20 @@ class Trainer:
                 validation_episodes, problem_name.upper()+str(validation_scale), oracle_score))
         
         self.best_gap = float("inf") # set best gap to inf at the beginning, which will be updated during training
+
+    def _build_muon_optimizer(self):
+        optimizer = HybridMuonAdamW(
+            self.model.named_parameters(),
+            **self.optimizer_params['optimizer'],
+        )
+        self.logger.info(
+            "Hybrid Muon optimizer: {} 2D parameter tensors use torch.optim.Muon; "
+            "{} non-2D parameter tensors use AdamW.".format(
+                len(optimizer.muon_param_names),
+                len(optimizer.adamw_param_names),
+            )
+        )
+        return optimizer
 
     def run(self):
         self.time_estimator.reset(self.start_epoch)
