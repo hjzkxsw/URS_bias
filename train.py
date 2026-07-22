@@ -16,6 +16,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
  
 import argparse
+import os
+
+if "PYTORCH_ALLOC_CONF" not in os.environ and "PYTORCH_CUDA_ALLOC_CONF" not in os.environ:
+    os.environ["PYTORCH_ALLOC_CONF"] = "backend:cudaMallocAsync"
+
 import torch
 
 import pytz
@@ -97,9 +102,9 @@ if __name__ == "__main__":
             },
         },
         'model_load': {
-            'enable': False,  # enable loading pre-trained model
-            #'path': '',  # directory path of pre-trained model and log files saved.
-            #'epoch': ,  # epoch version of pre-trained model to load.
+            'enable': True,  # enable loading pre-trained model
+            'path': '/public/home/houjz/urs_bias/URS_bias/result_train/2026-07-17/20260717_231031_demand_max1_T11V30_epoch500_bs128_batch2000',  # directory path of pre-trained model and log files saved.
+            'epoch': 242,  # epoch version of pre-trained model to load.
         },
     }
 
