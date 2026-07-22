@@ -16,6 +16,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
  
 import argparse
+import os
+
+if "PYTORCH_ALLOC_CONF" not in os.environ and "PYTORCH_CUDA_ALLOC_CONF" not in os.environ:
+    os.environ["PYTORCH_ALLOC_CONF"] = "backend:cudaMallocAsync"
+    
 import torch
 
 import pytz
