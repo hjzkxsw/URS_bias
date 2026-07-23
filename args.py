@@ -87,7 +87,7 @@ def add_model_arguments(parser):
     parser.add_argument("--encoder_layer_num", type=int, default=12, help="Number of encoder layers in the model")
     parser.add_argument("--ff_hidden_dim", type=int, default=512,
                         help="Hidden dimension for feed-forward layer in the model")
-    parser.add_argument("--logit_clipping", type=float, default=50, help="Logit clipping value for the model")
+    parser.add_argument("--logit_clipping", type=float, default=10, help="Logit clipping value for the model")
     parser.add_argument("--eval_type", type=str, default="greedy", choices=['sampling', 'greedy'], 
                         help="Evaluation type for the model. During training, we force it is sampling.")
     parser.add_argument("--no_demand_max1", action="store_true", help="Do not normalize demand to a maximum value of 1")
